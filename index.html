@@ -1,122 +1,16 @@
 
-import React, { useState } from 'react';
-import { X } from 'lucide-react';
-
-const ElementCraftingGame = () => {
-  const [elements, setElements] = useState([
-    { name: 'Water', emoji: '💧' },
-    { name: 'Fire', emoji: '🔥' },
-    { name: 'Earth', emoji: '🌍' },
-    { name: 'Air', emoji: '💨' }
-  ]);
-  
-  const [discovered, setDiscovered] = useState([]);
-  const [selected, setSelected] = useState([]);
-  
-  // Crafting rules
-  const craftingRules = {
-    'Water+Fire': { name: 'Steam', emoji: '♨️' },
-    'Water+Earth': { name: 'Mud', emoji: '💩' },
-    'Fire+Earth': { name: 'Lava', emoji: '🌋' },
-    'Fire+Air': { name: 'Lightning', emoji: '⚡' },
-    'Earth+Air': { name: 'Dust', emoji: '💨' },
-    'Water+Air': { name: 'Cloud', emoji: '☁️' }
-  };
-
-  const handleElementClick = (element) => {
-    if (selected.length < 2) {
-      setSelected([...selected, element]);
-    }
-  };
-
-  const craftElements = () => {
-    if (selected.length === 2) {
-      const combination = `${selected[0].name}+${selected[1].name}`;
-      const result = craftingRules[combination];
-      
-      if (result && !elements.find(e => e.name === result.name)) {
-        setElements([...elements, result]);
-        setDiscovered([...discovered, { 
-          recipe: `${selected[0].emoji} + ${selected[1].emoji} = ${result.emoji}`,
-          name: result.name 
-        }]);
-      }
-      setSelected([]);
-    }
-  };
-
-  const clearSelection = () => {
-    setSelected([]);
-  };
-
-  return (
-    <div className="max-w-4xl mx-auto p-6 bg-gray-50 rounded-lg shadow-lg">
-      <div className="mb-6">
-        <h1 className="text-3xl font-bold mb-2">Element Crafting</h1>
-        <p className="text-gray-600">Combine elements to discover new ones!</p>
-      </div>
-
-      {/* Crafting Area */}
-      <div className="mb-8 flex items-center justify-center gap-4">
-        <div className="flex items-center gap-4">
-          <div className="w-24 h-24 bg-white rounded-lg shadow flex items-center justify-center text-4xl">
-            {selected[0] ? selected[0].emoji : '?'}
-          </div>
-          <div className="text-2xl">+</div>
-          <div className="w-24 h-24 bg-white rounded-lg shadow flex items-center justify-center text-4xl">
-            {selected[1] ? selected[1].emoji : '?'}
-          </div>
-          <button
-            onClick={craftElements}
-            className="ml-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-            disabled={selected.length !== 2}
-          >
-            Craft
-          </button>
-          {selected.length > 0 && (
-            <button
-              onClick={clearSelection}
-              className="ml-2 p-2 text-gray-500 hover:text-gray-700"
-            >
-              <X size={24} />
-            </button>
-          )}
-        </div>
-      </div>
-
-      {/* Available Elements */}
-      <div className="mb-8">
-        <h2 className="text-xl font-bold mb-4">Available Elements</h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {elements.map((element, index) => (
-            <button
-              key={index}
-              onClick={() => handleElementClick(element)}
-              className="p-4 bg-white rounded-lg shadow hover:shadow-md transition-shadow flex flex-col items-center"
-            >
-              <span className="text-3xl mb-2">{element.emoji}</span>
-              <span className="text-sm font-medium">{element.name}</span>
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* Discoveries */}
-      {discovered.length > 0 && (
-        <div>
-          <h2 className="text-xl font-bold mb-4">Discoveries</h2>
-          <div className="bg-white rounded-lg shadow p-4">
-            {discovered.map((discovery, index) => (
-              <div key={index} className="mb-2 last:mb-0">
-                {discovery.recipe} <span className="text-gray-600">({discovery.name})</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-    </div>
-  );
-};
-
-export default ElementCraftingGame;
+// index.html
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Element Craft</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
 
